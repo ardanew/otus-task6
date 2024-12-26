@@ -16,7 +16,7 @@ public:
 	/// \details If value equals to the default - clears cell
 	MatrixCell& operator=(T value)
 	{
-		auto key = make_tuple(m_rowIdx, m_colIdx);
+		auto key = std::make_tuple(m_rowIdx, m_colIdx);
 		if (value == m_defaultValue)
 		{ // special case - clear cell value to optimize memory usage
 			if (m_points.find(key) != m_points.end())
@@ -29,7 +29,7 @@ public:
 
 // 	operator T& ()
 // 	{
-// 		auto key = make_tuple(m_rowIdx, m_colIdx);
+// 		auto key = std::make_tuple(m_rowIdx, m_colIdx);
 // 		if (auto it = m_points.find(key); it == m_points.end())
 // 			return m_defaultValue;
 // 		return m_points[key];
@@ -39,7 +39,7 @@ public:
 	/// \details For comparisons like matrix[0][0] == value
 	operator T& () const
 	{
-		auto key = make_tuple(m_rowIdx, m_colIdx);
+		auto key = std::make_tuple(m_rowIdx, m_colIdx);
 		if (auto it = m_points.find(key); it == m_points.end())
 			return m_defaultValue;
 		return m_points[key];
@@ -91,10 +91,11 @@ public:
 		return res;
 	}
 
+protected:
 	class Iterator;
+public:
 	Iterator begin() { return Iterator{m_points.begin()}; }
 	Iterator end() { return Iterator{ m_points.end() }; }
-
 
 protected:
 	/// default value for unassigned cells
